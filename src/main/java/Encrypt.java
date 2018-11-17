@@ -3,7 +3,7 @@ import java.io.UnsupportedEncodingException;
 public class Encrypt {
     private String id;
     private String key;
-    String long_key;
+    public String long_key;
     private String[] all_plaintext;
     private String[] all_ciphertext;
     private String[] all_viewtext;
@@ -22,10 +22,10 @@ public class Encrypt {
 
 //        伪随机加密
         PseudoRandomGenerator prg = new PseudoRandomGenerator(this.long_key);
-        this.all_ciphertext = prg.ENC(this.all_plaintext);
+//        this.all_ciphertext = prg.stringENC(this.all_plaintext);
 
 //        伪随机解密
-        this.all_viewtext = prg.DEC(all_ciphertext);
+//        this.all_viewtext = prg.stringDEC(all_ciphertext);
 
 
 ////        AES加密
@@ -52,14 +52,6 @@ public class Encrypt {
 //        }
 
 
-    }
-
-    public static void main(String[] args) {
-        String hexString = toHexString("老，母，鸡，老，母");
-        String utf8String = toUTF_8(hexString);
-        System.out.println(hexString);
-        System.out.println(utf8String);
-        System.out.println("00b1b2b3".length());
     }
 
     public static String toHexString(String seed) {

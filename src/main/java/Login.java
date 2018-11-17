@@ -52,35 +52,39 @@ public class Login {
         public void actionPerformed(ActionEvent e) {
             String IDnumber=textField1.getText();
             String password=passwordField1.getText();
-
-            /**Encrypt encrypt=new Encrypt(IDnumber,password);
-            PseudoRandomGenerator psg = new PseudoRandomGenerator(encrypt.long_key);
-            String cipherIDnumber = psg.ENC(IDnumber);
-            String cipherPassword = psg.ENC(password);
-*/
-            String[] allMessage=Database.Processing.seek(IDnumber,password);
-            if(Character.isDigit(allMessage[0].charAt(0))){
-                Hospital hospital=new Hospital(allMessage);
-                frame.dispose();
-                try {
-                    hospital.go();
-                } catch (UnsupportedEncodingException e1) {
-                    e1.printStackTrace();
-                }
+            if(password.length()!=8){
+                ErrorPassword errorPassword=new ErrorPassword();
+                errorPassword.go();
             }else {
-                if(allMessage[0].equals("该用户不存在！")){
-                    DoNotExist doNotExist=new DoNotExist();
-                    doNotExist.go();
-                }else if(allMessage[0].equals("发生未知异常！")){
-                    UnknownError unknownError=new UnknownError();
-                    unknownError.go();
-                }else if(allMessage[0].equals("你输入的密码有误！")){
-                    ErrorPassword errorPassword=new ErrorPassword();
-                    errorPassword.go();
+
+                PseudoRandomGenerator pseudoRandomGenerator = new PseudoRandomGenerator(PseudoRandomGenerator.toLong_key(password));
+                String cipherID = pseudoRandomGenerator.intENC(IDnumber);
+                String cipherPassword = pseudoRandomGenerator.intENC(password);
+
+
+                String[] allMessage = Database.Processing.seek(cipherID, cipherPassword);
+
+                if (Character.isDigit(allMessage[0].charAt(0))) {
+                    Hospital hospital = new Hospital(allMessage, pseudoRandomGenerator);
+                    frame.dispose();
+                    try {
+                        hospital.go();
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    if (allMessage[0].equals("该用户不存在！")) {
+                        DoNotExist doNotExist = new DoNotExist();
+                        doNotExist.go();
+                    } else if (allMessage[0].equals("发生未知异常！")) {
+                        UnknownError unknownError = new UnknownError();
+                        unknownError.go();
+                    } else if (allMessage[0].equals("你输入的密码有误！")) {
+                        ErrorPassword errorPassword = new ErrorPassword();
+                        errorPassword.go();
+                    }
                 }
-
             }
-
         }
     }
 

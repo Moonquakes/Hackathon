@@ -143,7 +143,9 @@ public class Resource{
     public void start() throws UnsupportedEncodingException {
         JFrame frame=new JFrame();
         if(id.length()==18&&telephone.length()==11&&password.length()==8) {
-            if(Database.Processing.ifExist(id)){
+            PseudoRandomGenerator pseudoRandomGenerator = new PseudoRandomGenerator(PseudoRandomGenerator.toLong_key(password));
+            String cipherID = pseudoRandomGenerator.intENC(id);
+            if(Database.Processing.ifExist(cipherID)){
                 success=new JLabel("该用户名已被注册！");
                 buttonback = new JButton("返回登录");
                 buttonback.addActionListener(new ButtonBackLoginListener());
@@ -175,8 +177,15 @@ public class Resource{
                 } else if (((cMouth) - Integer.parseInt(birth_Mouth)) > 0) {
                     age = (cYear) - Integer.parseInt(birth_Year);
                 }
-                String brithdate = birth_Year + "-" + birth_Mouth + "-" + birth_Day;
-                Database.Processing.register(id, name, sex, brithdate, telephone, "无", password);
+                String birthdate = birth_Year + "" + birth_Mouth + "" + birth_Day;
+
+                String cipherName = pseudoRandomGenerator.stringENC(name);
+                String cipherSex = pseudoRandomGenerator.stringENC(sex);
+                String cipherBirthdate = pseudoRandomGenerator.intENC(birthdate);
+                String cipherTelephone = pseudoRandomGenerator.intENC(telephone);
+                String cipherPassword = pseudoRandomGenerator.intENC(password);
+
+                Database.Processing.register(cipherID, cipherName, cipherSex, cipherBirthdate, cipherTelephone, "无", cipherPassword);
 
                 buttonback = new JButton("返回登录");
                 buttonback.addActionListener(new ButtonBackLoginListener());

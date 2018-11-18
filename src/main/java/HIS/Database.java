@@ -10,7 +10,7 @@ class Database {
             String[] result=new String[6];
             JDBCFacade jdbc = new JDBCFacade();
             try {
-                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "123456789hHH");
+                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "password");
 
                 String sql="select * from patient_data";
                 ResultSet rs = jdbc.executeQuery(sql);
@@ -44,7 +44,7 @@ class Database {
         static void register(String IDnumber, String name, String sex, String brithdate, String phone_number, String condition, String password) {
             JDBCFacade jdbc = new JDBCFacade();
             try {
-                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "123456789hHH");
+                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "password");
 
                 condition=encrypt(condition);
                 String sql="insert into patient_data values('"+IDnumber+"','"+name+"','"+sex+"','"+brithdate+"','"+phone_number+"','"+condition+"','"+password+"')";
@@ -60,7 +60,7 @@ class Database {
             JDBCFacade jdbc = new JDBCFacade();
             String sql="";
             try {
-                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "123456789hHH");
+                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "password");
                 if(index==1){
                     sql="update patient_data set name='"+newMessage+"' where IDnumber='"+IDnumber+"'";
                     jdbc.executeUpdate(sql);
@@ -86,7 +86,7 @@ class Database {
         static boolean ifExist(String IDnumber) {
             JDBCFacade jdbc = new JDBCFacade();
             try {
-                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "123456789hHH");
+                jdbc.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/hospital?serverTimezone=GMT%2B8", "root", "password");
 
                 String sql="select * from patient_data";
                 ResultSet rs = jdbc.executeQuery(sql);

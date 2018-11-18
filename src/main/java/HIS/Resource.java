@@ -240,6 +240,8 @@ public class Resource{
         @Override
         public void actionPerformed(ActionEvent e) {
             frame.dispose();
+            Login login=new Login();
+            login.go();
         }
     }
     class ButtonBackLoginListener implements ActionListener{

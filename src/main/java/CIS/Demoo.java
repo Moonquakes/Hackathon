@@ -53,6 +53,5 @@ public class Demoo {
 
 
 
-        System.out.print("心肌梗塞： 平均住院日：" + averageDAYS + "  平均费用：" + averAGEMONEY + "    存活率：" + alivell);
     }
 }
